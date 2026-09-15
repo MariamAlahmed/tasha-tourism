@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ar="تسجيل الدخول — طشّة" data-en="Login — Tasha">تسجيل الدخول — طشّة</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="site-header static">
+        <button class="lang-btn" id="lang-btn">English</button>
+        <nav class="main-nav">
+            <a href="index.html" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+            <a href="index.html#experiences" data-ar="التجارب" data-en="Experiences">التجارب</a>
+            <a href="map.html" data-ar="الخريطة" data-en="Map">الخريطة</a>
+            <a href="providers.html" data-ar="مقدمو الخدمات" data-en="Providers">مقدمو الخدمات</a>
+            <a href="partners.html" data-ar="شركاؤنا" data-en="Partners">شركاؤنا</a>
+            <a href="bookings.html" data-ar="حجوزاتي" data-en="My Bookings">حجوزاتي</a>
+            <a href="login.html" data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</a>
+        </nav>
+        <a href="index.html" class="logo"><img src="assets/images/logo.png" alt="" class="logo-mark"><span data-ar="طشّة" data-en="Tasha">طشّة</span></a>
+    </header>
+
+    <div class="page-header">
+        <h1 data-ar="مرحباً بك في طشّة" data-en="Welcome to Tasha">مرحباً بك في طشّة</h1>
+        <p data-ar="سجّل دخولك للوصول إلى التوصيات المخصصة وحجوزاتك" data-en="Log in to access your personalized recommendations and bookings">سجّل دخولك للوصول إلى التوصيات المخصصة وحجوزاتك</p>
+    </div>
+
+    <!-- صفحة تسجيل الدخول — التصميم من ملف فريق العمل (tasha-j)، مربوطة بمنطق تسجيل الدخول ونتائج الاستبيان الخاصة بملفي -->
+    <section class="login-container">
+        <div class="login-card">
+            <form id="login-form">
+                <div class="login-success" id="login-success" hidden></div>
+
+                <!-- ملاحظة: تصنيف نوع الحساب (سائح / مقدم خدمة) يُحدَّد فقط عند إنشاء الحساب
+                     (صفحة "ليس لدي حساب؟ إنشاء حساب جديد")، ولا يتكرر هنا في تسجيل الدخول. -->
+
+                <div class="form-group">
+                    <label data-ar="البريد الإلكتروني أو رقم الجوال" data-en="Email or Phone Number">البريد الإلكتروني أو رقم الجوال</label>
+                    <input type="text" id="login-identifier" placeholder="example@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label data-ar="كلمة المرور" data-en="Password">كلمة المرور</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+
+                <!-- زر تسجيل الدخول الرئيسي -->
+                <button type="submit" class="login-submit-btn" id="login-submit" data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</button>
+            </form>
+
+            <a href="register.html" class="login-signup-link" style="display:block; margin-top:16px;">ليس لدي حساب؟ إنشاء حساب جديد</a>
+
+            <p class="login-note" style="color: rgba(243, 233, 220, 0.6);">
+                هذه الواجهة لأغراض العرض فقط ضمن مرحلة النموذج الأولي (Prototype) للهاكاثون.
+                أي بيانات تُدخلها هنا تُقبل شكليًا ولا يتم التحقق منها فعليًا أو حفظها،
+                لعدم وجود Backend ونظام مصادقة حقيقي بهالمرحلة.
+            </p>
+
+            <div class="login-divider">
+                <span data-ar="أو" data-en="OR">أو</span>
+            </div>
+
+            <!-- زر "خلنا نتعرف" الذي يفتح الاستبيان -->
+            <button id="toggle-quiz-btn" class="quiz-toggle-btn" data-ar="خلنا نتعرف ✦" data-en="Let's Get to Know You ✦">خلنا نتعرف ✦</button>
+
+            <!-- استبيان "خلنا نتعرف عليك" (مخفي افتراضياً وينفتح عند الضغط على الزر) -->
+            <div id="quiz-wrapper" class="quiz-wrapper hidden">
+            <h3 class="quiz-title" data-ar="خلنا نتعرف عليك!" data-en="Let us get to know you!">خلنا نتعرف عليك!</h3>
+            <p class="quiz-sub" data-ar="جاوب على الأسئلة ونقترح لك الفعالية المناسبة لاهتماماتك" data-en="Answer the questions so we can suggest the perfect event for you">جاوب على الأسئلة ونقترح لك الفعالية المناسبة لاهتماماتك</p>
+
+            <form id="quiz-form">
+                <!-- السؤال 1 -->
+                <div class="quiz-question">
+                    <label data-ar="1. كيف تحب تقضي وقت فراغك؟" data-en="1. How do you like to spend your free time?">1. كيف تحب تقضي وقت فراغك؟</label>
+                    <select name="q1" required>
+                        <option value="" disabled selected data-ar="اختر إجابة..." data-en="Select an option...">اختر إجابة...</option>
+                        <option value="فنون" data-ar="فعاليات فنية" data-en="Art events">فعاليات فنية</option>
+                        <option value="ثقافي" data-ar="فعاليات ثقافية" data-en="Cultural events">فعاليات ثقافية</option>
+                        <option value="تراثي" data-ar="فعاليات تراثية" data-en="Heritage events">فعاليات تراثية</option>
+                        <option value="موسيقى" data-ar="موسيقى وعروض" data-en="Music & Shows">موسيقى وعروض</option>
+                        <option value="تسوق" data-ar="مطاعم وتجارب طعام / تسوق" data-en="Dining & Shopping">مطاعم وتجارب طعام / تسوق</option>
+                    </select>
+                </div>
+
+                <!-- السؤال 2 -->
+                <div class="quiz-question">
+                    <label data-ar="2. وش نوع الفعاليات اللي تجذبك أكثر؟" data-en="2. What type of events attracts you most?">2. وش نوع الفعاليات اللي تجذبك أكثر؟</label>
+                    <select name="q2" required>
+                        <option value="" disabled selected data-ar="اختر إجابة..." data-en="Select an option...">اختر إجابة...</option>
+                        <option value="تراثي" data-ar="تراثية" data-en="Heritage">تراثية</option>
+                        <option value="رياضي" data-ar="رياضية" data-en="Sports">رياضية</option>
+                        <option value="سياحة" data-ar="مغامرات وطبيعة / سياحة" data-en="Adventures & Tourism">مغامرات وطبيعة / سياحة</option>
+                        <option value="تقني" data-ar="تجارب محلية / تقنية" data-en="Local / Tech Experiences">تجارب محلية / تقنية</option>
+                        <option value="فنون" data-ar="فنية" data-en="Arts">فنية</option>
+                    </select>
+                </div>
+
+                <!-- السؤال 3 -->
+                <div class="quiz-question">
+                    <label data-ar="3. غالباً تحب تحضر الفعالية مع من؟" data-en="3. Who do you usually attend events with?">3. غالباً تحب تحضر الفعالية مع من؟</label>
+                    <select name="q3">
+                        <option value="لوحدي" data-ar="لوحدي" data-en="Solo">لوحدي</option>
+                        <option value="أصدقائي" data-ar="أصدقائي" data-en="Friends">أصدقائي</option>
+                        <option value="العائلة" data-ar="العائلة" data-en="Family">العائلة</option>
+                        <option value="الزوج/الشريك" data-ar="الزوج / الشريك" data-en="Partner">الزوج / الشريك</option>
+                    </select>
+                </div>
+
+                <!-- السؤال 4 -->
+                <div class="quiz-question">
+                    <label data-ar="4. وش مستوى المغامرة اللي يناسبك؟" data-en="4. What level of adventure suits you?">4. وش مستوى المغامرة اللي يناسبك؟</label>
+                    <select name="q4">
+                        <option value="هادئ" data-ar="هادئ ومريح" data-en="Calm & Relaxing">هادئ ومريح</option>
+                        <option value="جديد" data-ar="أحب أجرب أشياء جديدة" data-en="Try new things">أحب أجرب أشياء جديدة</option>
+                        <option value="تحدي" data-ar="مغامرات وتحديات" data-en="Adventures & Challenges">مغامرات وتحديات</option>
+                    </select>
+                </div>
+
+                <!-- السؤال 5 -->
+                <div class="quiz-question">
+                    <label data-ar="5. كم تحب تكون مدة الفعالية؟" data-en="5. How long do you prefer the event to last?">5. كم تحب تكون مدة الفعالية؟</label>
+                    <select name="q5">
+                        <option value="أقل من ساعة" data-ar="أقل من ساعة" data-en="Less than 1 hour">أقل من ساعة</option>
+                        <option value="1-2 ساعة" data-ar="1 - 2 ساعة" data-en="1 - 2 hours">1 - 2 ساعة</option>
+                        <option value="2-4 ساعة" data-ar="2 - 4 ساعة" data-en="2 - 4 hours">2 - 4 hours</option>
+                        <option value="يوم كامل" data-ar="يوم كامل" data-en="Full day">يوم كامل</option>
+                    </select>
+                </div>
+
+                <!-- السؤال 6 -->
+                <div class="quiz-question">
+                    <label data-ar="6. متى تفضل حضور الفعالية؟" data-en="6. When do you prefer to attend?">6. متى تفضل حضور الفعالية؟</label>
+                    <select name="q6">
+                        <option value="صباحاً" data-ar="صباحاً" data-en="Morning">صباحاً</option>
+                        <option value="عصراً" data-ar="عصراً" data-en="Afternoon">عصراً</option>
+                        <option value="مساءً" data-ar="مساءً" data-en="Evening">مساءً</option>
+                        <option value="نهاية الأسبوع" data-ar="نهاية الأسبوع" data-en="Weekend">نهاية الأسبوع</option>
+                    </select>
+                </div>
+
+                <!-- السؤال 7 -->
+                <div class="quiz-question">
+                    <label data-ar="7. ما هي المنطقة التي تفضل اكتشافها قريباً؟" data-en="7. Which city would you like to explore?">7. ما هي المنطقة التي تفضل اكتشافها قريباً؟</label>
+                    <select name="q7" required>
+                        <option value="" disabled selected data-ar="اختر المدينة..." data-en="Select a city...">اختر المدينة...</option>
+                        <option value="الخبر" data-ar="الخبر" data-en="Khobar">الخبر</option>
+                        <option value="الدمام" data-ar="الدمام" data-en="Dammam">الدمام</option>
+                        <option value="الظهران" data-ar="الظهران" data-en="Dhahran">الظهران</option>
+                        <option value="الجبيل" data-ar="الجبيل" data-en="Jubail">الجبيل</option>
+                        <option value="القطيف" data-ar="القطيف" data-en="Qatif">القطيف</option>
+                        <option value="الأحساء" data-ar="الأحساء" data-en="Al-Ahsa">الأحساء</option>
+                    </select>
+                </div>
+
+                <!-- السؤال 8 -->
+                <div class="quiz-question">
+                    <label data-ar="8. وش الميزانية المناسبة لك؟" data-en="8. What budget suits you?">8. وش الميزانية المناسبة لك؟</label>
+                    <select name="q8">
+                        <option value="مجانية" data-ar="مجانية" data-en="Free">مجانية</option>
+                        <option value="أقل من 50" data-ar="أقل من 50 ريال" data-en="Under 50 SAR">أقل من 50 ريال</option>
+                        <option value="50-150" data-ar="50 - 150 ريال" data-en="50 - 150 SAR">50 - 150 ريال</option>
+                        <option value="أكثر من 150" data-ar="أكثر من 150 ريال" data-en="Over 150 SAR">أكثر من 150 ريال</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="quiz-btn" data-ar="اكتشف الفعالية المناسبة لك" data-en="Discover Your Event">اكتشف الفعالية المناسبة لك</button>
+            </form>
+
+            <!-- نتيجة التوصية -->
+            <div id="quiz-result" class="quiz-result hidden">
+                <h4 data-ar="سعدنا بالتعرف عليك! 🎉" data-en="Glad to know you! 🎉" style="color: #f3e9dc; margin-bottom: 10px;">سعدنا بالتعرف عليك! 🎉</h4>
+                <p id="match-text" class="match-text"></p>
+                <div id="recommended-card-container" style="display: flex; justify-content: center; margin-top: 15px;"></div>
+                <a id="quiz-see-all-link" href="index.html#experiences" class="quiz-btn-secondary" data-ar="شاهد كل الفعاليات المناسبة لك" data-en="See All Matching Experiences">شاهد كل الفعاليات المناسبة لك</a>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- الفوتر مع إضافة قسم تواصل معنا في الأسفل على اليسار -->
+    <footer class="site-footer">
+        <div class="footer-top" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <nav class="footer-nav">
+                <a href="index.html" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+                <a href="index.html#experiences" data-ar="التجارب" data-en="Experiences">التجارب</a>
+                <a href="map.html" data-ar="الخريطة" data-en="Map">الخريطة</a>
+                <a href="providers.html" data-ar="مقدمو الخدمات" data-en="Providers">مقدمو الخدمات</a>
+                <a href="partners.html" data-ar="شركاؤنا" data-en="Partners">شركاؤنا</a>
+                <a href="bookings.html" data-ar="حجوزاتي" data-en="My Bookings">حجوزاتي</a>
+                <a href="login.html" data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</a>
+            </nav>
+
+            <!-- قسم تواصل معنا (أسفل اليسار) -->
+            <div class="footer-contact" style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+                <span style="font-weight: bold; font-size: 1.06rem; color: #f3e9dc;" data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</span>
+                <div class="social-links" style="display: flex; gap: 16px; align-items: center;">
+                    <a href="https://x.com" target="_blank" title="X (Twitter)" style="color: #f3e9dc; font-size: 1.34rem; transition: color 0.3s;" onmouseover="this.style.color='#d9622b'" onmouseout="this.style.color='#f3e9dc'"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank" title="Instagram" style="color: #f3e9dc; font-size: 1.34rem; transition: color 0.3s;" onmouseover="this.style.color='#d9622b'" onmouseout="this.style.color='#f3e9dc'"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://tiktok.com" target="_blank" title="TikTok" style="color: #f3e9dc; font-size: 1.34rem; transition: color 0.3s;" onmouseover="this.style.color='#d9622b'" onmouseout="this.style.color='#f3e9dc'"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="tel:+966500000000" title="Phone" style="color: #f3e9dc; font-size: 1.34rem; transition: color 0.3s;" onmouseover="this.style.color='#d9622b'" onmouseout="this.style.color='#f3e9dc'"><i class="fa-solid fa-phone"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span data-ar="طشّة — منصة سياحية ذكية" data-en="Tasha — Smart Tourism Platform">طشّة — منصة سياحية ذكية</span>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/predict.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

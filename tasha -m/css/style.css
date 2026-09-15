@@ -1,0 +1,771 @@
+/* style.css — التنسيق العام لمنصة طشّة */
+
+/* ============ الخط ============ */
+/* خط مؤقت (Cairo) — أقرب خط متاح مجانًا لروح خط ثمانية (هندسي/عصري/بولد بالعناوين)
+   لحين تحميل خط ثمانية الأصلي من font.thmanyah.com */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+
+/* لما يوصلك خط ثمانية، فك التعليق عن السطور التالية وحط ملفات الخط
+   داخل assets/fonts/ بنفس الأسماء، وبعدين استبدل Cairo بـ 'Thmanyah' بالأسفل */
+/*
+@font-face {
+    font-family: 'Thmanyah';
+    src: url('../assets/fonts/Thmanyah-Regular.woff2') format('woff2');
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'Thmanyah';
+    src: url('../assets/fonts/Thmanyah-Bold.woff2') format('woff2');
+    font-weight: 700;
+}
+*/
+
+/* ============ المتغيرات ============ */
+:root{
+    --cream:#f7f1eb;
+    --tan:#f2decb;
+    --brown-dark:#3c2415;
+    --brown-mid:#5a3520;
+    --text-dark:#2a1c12;
+    --text-muted:#6b5c4d;
+    --amber:#b5772a;
+    --red:#b8503f;
+    --red-bg:#f6e3e0;
+    --amber-bg:#f5e9d6;
+    --green:#4f7d63;
+    --green-bg:#e6ede9;
+}
+
+/* ============ إعادة ضبط أساسية ============ */
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+    font-family:'Cairo', sans-serif;
+    background:var(--cream);
+    color:var(--text-dark);
+    line-height:1.7;
+}
+a{ text-decoration:none; color:inherit; }
+ul{ list-style:none; }
+img{ max-width:100%; display:block; }
+
+/* ============ الهيدر ============ */
+.site-header{
+    position:absolute; top:0; left:0; right:0; z-index:10;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 6%;
+}
+.lang-btn{
+    display:inline-block;
+    border:1px solid rgba(255,255,255,.7); color:#fff; background:transparent;
+    padding:8px 22px; border-radius:24px; font-size:16px; cursor:pointer;
+    font-family:inherit;
+}
+.main-nav{ display:flex; gap:20px; font-size:16px; color:#f1e9dc; }
+.logo{ font-weight:800; font-size:25px; color:#fff; display:inline-flex; align-items:center; gap:10px; }
+.logo-mark{ height:46px; width:auto; display:block; }
+
+/* ============ الهيرو (خلفية متحركة بدون فيديو) ============ */
+.hero{
+    position:relative;
+    height:600px;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    color:#fff;
+    overflow:hidden;
+    background:linear-gradient(135deg,#6b4426,#3c2415 55%,#2c4a4a);
+    background-size:300% 300%;
+    animation:heroShift 14s ease infinite;
+}
+@keyframes heroShift{
+    0%{ background-position:0% 50%; }
+    50%{ background-position:100% 50%; }
+    100%{ background-position:0% 50%; }
+}
+.hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(30,18,10,.35) 0%, rgba(30,18,10,.65) 100%);
+}
+.hero-content{ position:relative; z-index:2; max-width:700px; padding:0 20px; }
+.hero-content h1{
+    font-size:45px; font-weight:800; line-height:1.6; margin-bottom:14px;
+}
+.hero-sub{
+    font-size:20px; font-weight:400; color:#e6dac9; letter-spacing:.3px;
+}
+
+/* ============ هيدر الصفحات الداخلية (غير شفاف) ============ */
+.site-header.static{
+    position:static;
+    background:var(--brown-dark);
+}
+.site-header.static .lang-btn{ border-color:rgba(255,255,255,.5); }
+
+.page-header{
+    background:var(--brown-dark); color:#fff;
+    padding:50px 6% 44px; text-align:center;
+}
+.page-header h1{ font-size:34px; font-weight:800; margin-bottom:10px; }
+.page-header p{ color:#d9c9b4; font-size:17px; }
+
+/* ============ لوحة مقدم الخدمة ============ */
+.dash{ padding:60px 6% 80px; max-width:800px; margin:0 auto; }
+.category-select-label{
+    display:flex; flex-direction:column; gap:8px; font-size:16px; color:var(--text-muted);
+    margin-bottom:30px; max-width:280px;
+}
+.category-select{
+    font-family:inherit; font-size:17px; padding:10px 12px;
+    border:1px solid rgba(60,36,21,.25); border-radius:6px; color:var(--text-dark);
+    background:#fff;
+}
+.forecast-table{ display:flex; flex-direction:column; gap:12px; margin-bottom:28px; }
+.forecast-row{ display:flex; align-items:center; gap:14px; }
+.forecast-day{ width:70px; font-size:15px; color:var(--text-muted); flex-shrink:0; }
+.forecast-bar-wrap{
+    flex:1; background:rgba(60,36,21,.08); border-radius:6px; height:20px; overflow:hidden;
+}
+.forecast-bar{ height:100%; border-radius:6px; transition:width .3s ease; }
+.forecast-bar.high{ background:var(--red); }
+.forecast-bar.medium{ background:var(--amber); }
+.forecast-bar.low{ background:var(--green); }
+.forecast-value{ width:40px; font-size:15px; font-weight:700; color:var(--text-dark); text-align:left; flex-shrink:0; }
+.dash-note{
+    font-size:16px; color:var(--text-dark); background:var(--amber-bg);
+    border-right:3px solid var(--amber); padding:16px 18px; border-radius:4px; line-height:1.9;
+}
+
+/* ============ حجوزاتي ============ */
+.bookings{ padding:60px 6% 80px; max-width:800px; margin:0 auto; }
+.booking-item{
+    display:flex; justify-content:space-between; align-items:center;
+    border:1px solid rgba(60,36,21,.12); border-radius:8px;
+    padding:18px 20px; margin-bottom:16px;
+}
+.booking-info .booking-name{ font-size:18px; font-weight:700; margin-bottom:6px; }
+.booking-info .booking-meta{ font-size:15px; color:var(--text-muted); }
+.booking-status{
+    font-size:13px; font-weight:700; padding:5px 14px; border-radius:12px;
+    background:var(--green-bg); color:var(--green); white-space:nowrap;
+}
+.booking-status.pending{ background:var(--amber-bg); color:var(--amber); }
+.empty-state{
+    text-align:center; padding:60px 20px; color:var(--text-muted); font-size:17px;
+}
+
+/* ============ صفحة تفاصيل الفعالية ============ */
+.detail-hero{
+    background:var(--brown-dark); color:#fff;
+    padding:50px 6% 40px; text-align:center;
+}
+.detail-hero h1{ font-size:34px; font-weight:800; margin:14px 0 8px; }
+.detail-hero .detail-city{ color:#d9c9b4; font-size:17px; }
+
+.detail-body{
+    display:grid; grid-template-columns:1.6fr 1fr; gap:40px;
+    max-width:1100px; margin:0 auto; padding:50px 6% 80px;
+}
+.detail-main h2{ font-size:22px; font-weight:800; margin-bottom:12px; }
+.detail-main > p{ color:var(--text-muted); margin-bottom:28px; }
+
+.detail-meta-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:30px;
+}
+.meta-box{
+    border:1px solid rgba(60,36,21,.12); border-radius:8px; padding:14px 16px;
+    display:flex; flex-direction:column; gap:6px;
+}
+.meta-label{ font-size:13px; color:var(--text-muted); }
+.meta-value{ font-size:18px; font-weight:700; color:var(--text-dark); }
+
+.ai-reason{
+    background:var(--amber-bg); border-radius:8px; padding:20px 22px;
+}
+.ai-reason h3{ font-size:17px; font-weight:800; margin-bottom:10px; color:var(--brown-dark); }
+.ai-reason ul{ padding-right:18px; }
+.ai-reason li{ font-size:16px; color:var(--text-dark); margin-bottom:6px; list-style:disc; }
+
+/* ============ فورم الحجز ============ */
+.booking-form{
+    border:1px solid rgba(60,36,21,.15); border-radius:10px;
+    padding:24px 22px; position:sticky; top:20px;
+    display:flex; flex-direction:column; gap:14px;
+}
+.booking-form h3{ font-size:20px; font-weight:800; margin-bottom:4px; }
+.booking-form label{
+    display:flex; flex-direction:column; gap:6px; font-size:15px; color:var(--text-muted);
+}
+.booking-form input{
+    font-family:inherit; font-size:16px; padding:10px 12px;
+    border:1px solid rgba(60,36,21,.25); border-radius:6px; color:var(--text-dark);
+}
+.booking-total{
+    font-size:17px; font-weight:700; color:var(--text-dark);
+    border-top:1px dashed rgba(60,36,21,.2); padding-top:12px;
+}
+.cta-btn{
+    background:var(--brown-dark); color:#fff; border:none; border-radius:6px;
+    padding:13px; font-size:17px; font-weight:700; cursor:pointer; font-family:inherit;
+}
+.cta-btn:hover{ background:var(--brown-mid); }
+.form-note{ font-size:12px; color:var(--text-muted); text-align:center; }
+
+/* ============ تنبيه حجز جديد ناجح ============ */
+.booking-success-banner{
+    background:var(--green-bg); color:var(--green); border-right:3px solid var(--green);
+    padding:14px 18px; border-radius:6px; margin-bottom:24px; font-size:16px; font-weight:600;
+}
+
+/* ============ التنبيه الاستباقي (Smart Alert) ============ */
+.smart-alert{
+    border:1.5px solid var(--red); background:var(--red-bg);
+    border-radius:8px; padding:20px 22px; margin-bottom:30px;
+}
+.alert-tag{
+    display:inline-block; font-size:13px; font-weight:800; color:var(--red);
+    background:#fff; padding:4px 12px; border-radius:12px; margin-bottom:10px;
+}
+.alert-msg{ font-size:16px; color:var(--text-dark); margin-bottom:16px; }
+.alert-options{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.alert-option{
+    background:#fff; border-radius:6px; padding:14px; display:flex; flex-direction:column; gap:8px;
+}
+.alert-option strong{ font-size:15px; color:var(--text-dark); }
+.alert-option-text{ font-size:14px; color:var(--text-muted); line-height:1.6; }
+.alt-suggestion{ display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.alt-name{ font-size:15px; font-weight:700; color:var(--text-dark); }
+.alt-meta{ font-size:13px; color:var(--text-muted); margin-top:2px; }
+.alt-link{
+    font-size:13px; font-weight:700; color:var(--amber); white-space:nowrap;
+    border-bottom:1px solid var(--amber); padding-bottom:1px;
+}
+
+/* ============ صفحة شركاؤنا ============ */
+.partners-page{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+    max-width:1000px; margin:0 auto; padding:50px 6% 20px;
+}
+.partner-card{
+    border:1px solid rgba(60,36,21,.15); border-radius:8px; padding:22px 18px;
+    text-align:center; background:#fff;
+}
+.partner-name{ font-size:17px; font-weight:800; color:var(--brown-dark); margin-bottom:8px; }
+.partner-role{ font-size:14px; color:var(--text-muted); line-height:1.7; }
+.partners-note{
+    max-width:700px; margin:10px auto 70px; padding:0 6%;
+    font-size:14px; color:var(--text-muted); text-align:center;
+}
+
+/* ============ عن طشّة ============ */
+.about{ padding:70px 6% 50px; text-align:center; }
+.about h2{ font-size:31px; font-weight:800; color:var(--brown-dark); margin-bottom:22px; }
+.about p{
+    max-width:820px; margin:0 auto; color:var(--text-muted); font-size:18px; line-height:2;
+}
+
+/* ============ أقسام الفعاليات (دوائر التصنيفات) ============ */
+.event-categories{ padding:10px 6% 60px; text-align:center; }
+.event-categories h2{ font-size:29px; font-weight:800; color:var(--brown-dark); margin-bottom:8px; }
+.event-categories .section-sub{ color:var(--text-muted); font-size:16px; margin-bottom:34px; }
+.category-grid{
+    display:flex; flex-wrap:nowrap; justify-content:flex-start; gap:26px;
+    max-width:1100px; margin:0 auto; overflow-x:auto; scroll-behavior:smooth;
+    -webkit-overflow-scrolling:touch; padding:4px 4px 14px;
+}
+.category-item{
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    flex:0 0 104px; background:none; border:none; font-family:inherit; cursor:pointer; padding:0;
+}
+.category-circle{
+    width:82px; height:82px; border-radius:50%;
+    background:var(--tan); color:var(--brown-dark);
+    display:flex; align-items:center; justify-content:center; font-size:29px;
+    border:2px solid transparent;
+    transition:transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease, border-color .25s ease;
+}
+.category-item:hover .category-circle, .category-item:focus-visible .category-circle{
+    transform:translateY(-4px);
+    background:var(--amber); color:#fff;
+    box-shadow:0 10px 22px rgba(181,119,42,.35);
+}
+.category-item.active .category-circle{
+    background:var(--brown-dark); color:#fff; border-color:var(--brown-dark);
+}
+.category-label{ font-size:15px; font-weight:700; color:var(--text-dark); line-height:1.4; }
+
+/* شارة "تعرض فعاليات: ..." تظهر بعد الضغط على تصنيف */
+.active-category-badge{
+    display:none; align-items:center; gap:10px;
+    background:var(--amber-bg); color:var(--amber); font-weight:700; font-size:15px;
+    padding:8px 16px; border-radius:20px; margin-bottom:22px; width:fit-content;
+}
+.active-category-badge.show{ display:inline-flex; }
+.active-category-badge button{
+    background:none; border:none; color:inherit; font-size:18px; line-height:1; cursor:pointer; padding:0;
+}
+
+/* ============ الخريطة الذكية ============ */
+.smart-map-section{ padding:20px 6% 70px; text-align:center; }
+.smart-map-section h2{ font-size:29px; font-weight:800; color:var(--brown-dark); margin-bottom:10px; }
+.map-intro{ color:var(--text-muted); font-size:16px; margin-bottom:16px; }
+.map-legend{ display:flex; justify-content:center; gap:22px; margin-bottom:18px; font-size:15px; color:var(--text-dark); }
+.map-legend .dot{
+    display:inline-block; width:10px; height:10px; border-radius:50%; margin-left:6px;
+    vertical-align:middle;
+}
+.map-legend .dot.high{ background:var(--red); }
+.map-legend .dot.medium{ background:var(--amber); }
+.map-legend .dot.low{ background:var(--green); }
+#smart-map{
+    height:420px; border-radius:10px; border:1px solid rgba(60,36,21,.15);
+    max-width:1100px; margin:0 auto;
+}
+.map-full{ height:560px; max-width:1100px; margin:0 auto; border-radius:10px; border:1px solid rgba(60,36,21,.15); }
+.map-teaser{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--brown-dark); color:#fff; padding:14px 26px; border-radius:8px;
+    font-size:17px; font-weight:700;
+}
+.map-teaser-arrow{ font-size:18px; }
+
+/* ============ الفعاليات ============ */
+.experiences{ padding:60px 6% 80px; }
+.section-head{
+    display:flex; justify-content:space-between; align-items:center; margin-bottom:32px;
+}
+.section-head h2{ font-size:29px; font-weight:800; color:var(--brown-dark); }
+.section-head a{
+    font-size:16px; color:var(--amber); border-bottom:1px solid var(--amber); padding-bottom:2px;
+}
+.filters{ display:flex; gap:20px; flex-wrap:wrap; margin-bottom:30px; }
+.filters label{
+    display:flex; flex-direction:column; gap:6px; font-size:15px; color:var(--text-muted);
+}
+.filters select{
+    font-family:inherit; font-size:16px; padding:9px 12px; min-width:180px;
+    border:1px solid rgba(60,36,21,.25); border-radius:6px; color:var(--text-dark); background:#fff;
+}
+.experience-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;
+}
+
+/* كرت الفعالية — الأصناف يولّدها script.js */
+.event-card{
+    background:#fff; border:1px solid rgba(60,36,21,.1); border-radius:8px;
+    overflow:hidden; display:flex; flex-direction:column;
+}
+.event-card-header{
+    padding:16px 18px 0;
+    display:flex; justify-content:space-between; align-items:flex-start;
+}
+.event-city{ font-size:13px; color:var(--text-muted); font-weight:500; }
+.event-tag{
+    display:inline-block; font-size:13px; font-weight:700;
+    padding:4px 12px; border-radius:12px;
+}
+.event-tag.high{ background:var(--red-bg); color:var(--red); }
+.event-tag.medium{ background:var(--amber-bg); color:var(--amber); }
+.event-tag.low{ background:var(--green-bg); color:var(--green); }
+
+/* أيقونات تصنيف الفعالية — نفس أيقونة دائرة القسم بالأعلى، ممكن أكثر من وحدة بنفس الكرت */
+.event-icons{ display:flex; gap:6px; padding:10px 18px 0; }
+.event-icon{
+    width:24px; height:24px; border-radius:50%;
+    background:var(--tan); color:var(--brown-dark);
+    display:flex; align-items:center; justify-content:center; font-size:11px;
+    flex-shrink:0;
+}
+
+.event-body{ padding:14px 18px 20px; flex:1; display:flex; flex-direction:column; }
+.event-name{ font-size:19px; font-weight:800; margin-bottom:8px; }
+.event-desc{ font-size:16px; color:var(--text-muted); margin-bottom:14px; flex:1; }
+.event-meta{
+    font-size:15px; color:var(--text-muted); margin-bottom:14px;
+    display:flex; flex-direction:column; gap:4px;
+}
+.event-cta{
+    align-self:flex-start; font-size:15px; font-weight:700; color:var(--amber);
+    border-bottom:1px solid var(--amber); padding-bottom:2px;
+}
+
+/* ============ الفوتر ============ */
+.site-footer{ background:var(--brown-dark); color:#e9ded0; padding:44px 6% 0; }
+.footer-top{ padding-bottom:28px; display:flex; justify-content:center; }
+.footer-nav{ display:flex; gap:20px; font-size:15px; flex-wrap:wrap; justify-content:center; }
+.socials{ display:flex; gap:12px; justify-content:center; margin-top:20px; }
+.social-icon{
+    width:34px; height:34px; border-radius:50%; border:1px solid rgba(255,255,255,.3);
+    display:flex; align-items:center; justify-content:center; color:#e9ded0;
+}
+.social-icon:hover{ background:rgba(255,255,255,.1); }
+.footer-bottom{
+    border-top:1px solid rgba(255,255,255,.15);
+    padding:18px 0; text-align:center; font-size:15px; color:#cbb99f;
+}
+
+/* ============ صفحة تسجيل الدخول (بروتوتايب فقط) ============ */
+.login-success{
+    background:var(--green-bg); color:var(--green); border-right:3px solid var(--green);
+    padding:12px 16px; border-radius:6px; font-size:15px; font-weight:600;
+}
+.login-signup-link{
+    text-align:center; font-size:15px; font-weight:600; color:var(--amber);
+    border-bottom:1px solid var(--amber); align-self:center; padding-bottom:2px;
+}
+.login-note{
+    font-size:13px; color:var(--text-muted); text-align:center; margin-top:14px; line-height:1.8;
+}
+
+/* ملاحظة: تصميم "اختيار نوع الحساب" وحقول مقدم الخدمة الآن موحّد مع بطاقة
+   تسجيل الدخول الداكنة (.role-toggle-dark و .login-card .provider-fields بالأسفل)
+   بدل التصميم الفاتح القديم، عشان تنسجم صفحتا الدخول وإنشاء الحساب مع بعض. */
+
+/* ============ ملاحظة صفحة إنجليزية (معاينة) ============ */
+.en-note{
+    max-width:820px; margin:0 auto 10px; padding:0 6%;
+    font-size:14px; color:var(--text-muted); text-align:center;
+}
+
+/* ============ تجاوب الشاشات الصغيرة ============ */
+@media(max-width:900px){
+    .main-nav{ display:none; }
+    .experience-grid{ grid-template-columns:1fr; }
+    .hero-content h1{ font-size:34px; }
+    .detail-body{ grid-template-columns:1fr; }
+    .booking-form{ position:static; }
+    .alert-options{ grid-template-columns:1fr; }
+    .partners-page{ grid-template-columns:1fr; }
+}
+
+/* ============ منقول من ملف فريق العمل (tasha-j) ============ */
+
+/* صفحة تسجيل الدخول — تصميم ملف فريق العمل (بطاقة داكنة) */
+.login-container {
+    padding: 60px 6% 80px;
+    display: flex;
+    justify-content: center;
+}
+
+.login-card {
+    background: #2c221e;
+    border: 1px solid rgba(217, 98, 43, 0.2);
+    border-radius: 16px;
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+    .form-group label {
+        color: #f3e9dc;
+        font-size: 1.06rem;
+    }
+
+    .form-group input {
+        background-color: #3d302a;
+        color: #fff;
+        border: 1px solid rgba(243, 233, 220, 0.2);
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 1.06rem;
+        font-family: inherit;
+        outline: none;
+    }
+
+        .form-group input:focus {
+            border-color: #d9622b;
+        }
+
+    .form-group select {
+        background-color: #3d302a;
+        color: #fff;
+        border: 1px solid rgba(243, 233, 220, 0.2);
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 1.06rem;
+        font-family: inherit;
+        outline: none;
+    }
+
+        .form-group select:focus {
+            border-color: #d9622b;
+        }
+
+    .form-group input[type="file"] {
+        font-family: inherit;
+        font-size: 0.95rem;
+        padding: 10px 12px;
+        border: 1px dashed rgba(243, 233, 220, 0.35);
+        border-radius: 8px;
+        color: #f3e9dc;
+        background-color: #3d302a;
+        cursor: pointer;
+    }
+
+/* حقول مقدم الخدمة الإضافية داخل بطاقة تسجيل الدخول/الحساب الداكنة */
+.login-card .provider-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-top: 1px dashed rgba(243, 233, 220, 0.2);
+    padding-top: 20px;
+    margin-top: 2px;
+    margin-bottom: 20px;
+}
+.login-card .provider-fields[hidden] { display: none; }
+.login-card .provider-fields-title {
+    font-size: 1.01rem;
+    font-weight: 700;
+    color: #f3e9dc;
+    margin-bottom: -6px;
+}
+.login-card .form-hint {
+    font-size: 0.85rem;
+    color: rgba(243, 233, 220, 0.6);
+    margin-top: -12px;
+}
+.login-card .file-status {
+    font-size: 0.9rem;
+    color: #7fbf9e;
+    font-weight: 600;
+    margin-top: -12px;
+}
+
+.login-submit-btn {
+    width: 100%;
+    background-color: #d9622b;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1.18rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+    .login-submit-btn:hover {
+        background-color: #b8503f;
+    }
+
+/* فاصل "أو" بين فورم الدخول وزر خلنا نتعرف */
+.login-divider {
+    text-align: center;
+    margin: 25px 0;
+    position: relative;
+}
+
+    .login-divider::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: rgba(243, 233, 220, 0.2);
+    }
+
+    .login-divider span {
+        position: relative;
+        background: #2c221e;
+        padding: 0 15px;
+        color: rgba(243, 233, 220, 0.6);
+        font-size: 0.95rem;
+    }
+
+/* زر خلنا نتعرف */
+.quiz-toggle-btn {
+    width: 100%;
+    background-color: transparent;
+    color: #f3e9dc;
+    border: 1px solid #d9622b;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1.12rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .quiz-toggle-btn:hover {
+        background-color: #d9622b;
+        color: #fff;
+    }
+
+/* اختيار نوع الحساب عند إنشاء الحساب (سائح / مقدم خدمة) — تصميم داكن، يُستخدم في register.html فقط */
+.role-toggle-dark {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+    .role-toggle-dark input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .role-toggle-dark span {
+        display: block;
+        flex: 1;
+        text-align: center;
+        padding: 12px 10px;
+        border: 1px solid rgba(243, 233, 220, 0.25);
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.01rem;
+        font-weight: 700;
+        color: #f3e9dc;
+        transition: all 0.25s ease;
+    }
+
+    .role-toggle-dark input:checked + span {
+        background-color: #d9622b;
+        border-color: #d9622b;
+        color: #fff;
+    }
+
+/* حاوية الاستبيان */
+.quiz-wrapper {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px dashed rgba(243, 233, 220, 0.2);
+    transition: all 0.4s ease;
+}
+
+    .quiz-wrapper.hidden {
+        display: none;
+    }
+
+.quiz-title {
+    text-align: center;
+    color: #d9622b;
+    font-size: 1.68rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.quiz-sub {
+    text-align: center;
+    color: rgba(243, 233, 220, 0.7);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+}
+
+.quiz-question {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+    .quiz-question label {
+        font-size: 1.01rem;
+        color: #f3e9dc;
+    }
+
+    .quiz-question select {
+        background-color: #3d302a;
+        color: #fff;
+        border: 1px solid rgba(243, 233, 220, 0.2);
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-size: 1.01rem;
+        font-family: inherit;
+        outline: none;
+    }
+
+.quiz-btn {
+    width: 100%;
+    background-color: #d9622b;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1.12rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.quiz-btn-secondary {
+    display: block;
+    width: 100%;
+    background-color: transparent;
+    color: #d9622b;
+    border: 2px solid #d9622b;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 1.01rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 12px;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: all 0.25s ease;
+}
+
+    .quiz-btn-secondary:hover {
+        background-color: #d9622b;
+        color: #fff;
+    }
+
+.quiz-result {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(243, 233, 220, 0.2);
+    text-align: center;
+}
+
+    .quiz-result.hidden {
+        display: none;
+    }
+
+.match-text {
+    font-size: 1.06rem;
+    color: #4f7d63;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+/* تنسيق فيديو خلفية قسم الهيرو */
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    object-fit: cover; /* يضمن تغطية المقطع لجميع أبعاد الشاشة بدون تشويه */
+}
+
+/* طبقة التظليل الشفافة فوق الفيديو لتسهيل قراءة النصوص */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 2;
+}
+
+/* التأكد من ظهور محتوى الهيرو فوق الفيديو وطبقة التظليل */
+.hero-content{ z-index:3; }

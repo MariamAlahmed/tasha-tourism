@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ar="طشّة — منصة سياحية ذكية" data-en="Tasha — Smart Tourism Platform">طشّة — منصة سياحية ذكية</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- مكتبة Font Awesome لإظهار أيقونات التواصل الاجتماعي -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <style>
+        /* إخفاء شريط التمرير (Scrollbar) لجميع المتصفحات مع إبقاء إمكانية السحب */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge */
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none; /* IE & Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <button class="lang-btn" id="lang-btn">English</button>
+        <nav class="main-nav">
+            <a href="index.html" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+            <a href="index.html#experiences" data-ar="التجارب" data-en="Experiences">التجارب</a>
+            <a href="map.html" data-ar="الخريطة" data-en="Map">الخريطة</a>
+            <a href="providers.html" data-ar="مقدمو الخدمات" data-en="Providers">مقدمو الخدمات</a>
+            <a href="partners.html" data-ar="شركاؤنا" data-en="Partners">شركاؤنا</a>
+            <a href="bookings.html" data-ar="حجوزاتي" data-en="My Bookings">حجوزاتي</a>
+            <a href="login.html" data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</a>
+        </nav>
+        <a href="index.html" class="logo"><img src="assets/images/logo.png" alt="" class="logo-mark"><span data-ar="طشّة" data-en="Tasha">طشّة</span></a>
+    </header>
+
+    <!-- قسم الهيرو المحدث بإضافة خلفية الفيديو ودعم الترجمة للسطر الفرعي -->
+    <section class="hero" id="hero">
+        <video autoplay loop muted playsinline class="hero-video">
+            <source src="assets/hero-bg.mp4" type="video/mp4">
+            متصفحك لا يدعم تشغيل الفيديو.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 data-ar="الشرقية مافيها فعاليات؟<br>احنا نوريك وين" data-en="No Eastern Province events?<br>We'll show you where">الشرقية مافيها فعاليات؟<br>احنا نوريك وين</h1>
+            <p class="hero-sub" data-ar="توقّع . وِجّه . اكتشف" data-en="Predict . Guide . Discover">توقّع . وِجّه . اكتشف</p>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <h2 data-ar="عن طشّة" data-en="About Tasha">عن طشّة</h2>
+        <p data-ar="طشّة منصة سياحية ذكية متخصصة بفعاليات المنطقة الشرقية، تعتمد على تحليل البيانات للتنبؤ بمستويات الازدحام والطلب على الوجهات والفعاليات، وتوجّه الزائر نحو تجربة بديلة مناسبة لاهتماماته وأقل ازدحامًا، مع تمكين منظمي الفعاليات من زيادة الإقبال في أوقات انخفاض الطلب."
+           data-en="Tasha is a smart tourism platform specializing in Eastern Province events. It uses data analytics to predict crowd levels and demand, directing visitors to alternative, personalized, and less crowded experiences while helping event organizers boost attendance.">
+            طشّة منصة سياحية ذكية متخصصة بفعاليات المنطقة الشرقية، تعتمد على تحليل البيانات
+            للتنبؤ بمستويات الازدحام والطلب على الوجهات والفعاليات، وتوجّه الزائر نحو تجربة
+            بديلة مناسبة لاهتماماته وأقل ازدحامًا، مع تمكين منظمي الفعاليات من زيادة الإقبال
+            في أوقات انخفاض الطلب.
+        </p>
+    </section>
+
+    <!-- قسم أقسام الفعاليات: دوائر تصنيفات تفتح فعاليات مقترحة بالأسفل عند الضغط -->
+    <section class="event-categories" id="event-categories">
+        <h2 data-ar="أقسام الفعاليات" data-en="Event Categories">أقسام الفعاليات</h2>
+        <p class="section-sub" data-ar="اختر تصنيف وبنقترح لك الفعاليات المرتبطة فيه" data-en="Pick a category and we'll suggest the experiences that match it">اختر تصنيف وبنقترح لك الفعاليات المرتبطة فيه</p>
+
+        <div class="category-grid no-scrollbar">
+            <button type="button" class="category-item" data-group="culture">
+                <span class="category-circle"><i class="fa-solid fa-landmark"></i></span>
+                <span class="category-label" data-ar="ثقافة وتراث" data-en="Culture & Heritage">ثقافة وتراث</span>
+            </button>
+            <button type="button" class="category-item" data-group="arts">
+                <span class="category-circle"><i class="fa-solid fa-palette"></i></span>
+                <span class="category-label" data-ar="فنون وإبداع" data-en="Arts & Creativity">فنون وإبداع</span>
+            </button>
+            <button type="button" class="category-item" data-group="education">
+                <span class="category-circle"><i class="fa-solid fa-graduation-cap"></i></span>
+                <span class="category-label" data-ar="تعليم وتطوير" data-en="Education & Development">تعليم وتطوير</span>
+            </button>
+            <button type="button" class="category-item" data-group="nature">
+                <span class="category-circle"><i class="fa-solid fa-mountain-sun"></i></span>
+                <span class="category-label" data-ar="طبيعة واستكشاف" data-en="Nature & Exploration">طبيعة واستكشاف</span>
+            </button>
+            <button type="button" class="category-item" data-group="adventure">
+                <span class="category-circle"><i class="fa-solid fa-person-hiking"></i></span>
+                <span class="category-label" data-ar="مغامرات ورياضة" data-en="Adventure & Sports">مغامرات ورياضة</span>
+            </button>
+            <button type="button" class="category-item" data-group="entertainment">
+                <span class="category-circle"><i class="fa-solid fa-masks-theater"></i></span>
+                <span class="category-label" data-ar="ترفيه وعروض" data-en="Entertainment & Shows">ترفيه وعروض</span>
+            </button>
+            <button type="button" class="category-item" data-group="food">
+                <span class="category-circle"><i class="fa-solid fa-utensils"></i></span>
+                <span class="category-label" data-ar="طعام وتذوق" data-en="Food & Tasting">طعام وتذوق</span>
+            </button>
+            <button type="button" class="category-item" data-group="markets">
+                <span class="category-circle"><i class="fa-solid fa-store"></i></span>
+                <span class="category-label" data-ar="أسواق ومجتمعات" data-en="Markets & Communities">أسواق ومجتمعات</span>
+            </button>
+        </div>
+    </section>
+
+    <section class="experiences" id="experiences">
+        <div class="section-head">
+            <h2 data-ar="فعاليات المنطقة الشرقية" data-en="Eastern Province Experiences">فعاليات المنطقة الشرقية</h2>
+            <a href="#" data-ar="عرض الكل" data-en="View all">عرض الكل</a>
+        </div>
+
+        <div id="active-category-badge" class="active-category-badge"></div>
+
+        <div class="filters">
+            <label>
+                <span data-ar="المنطقة" data-en="Region">المنطقة</span>
+                <select id="filter-city"><option value="all" data-ar="كل المناطق" data-en="All Regions">كل المناطق</option></select>
+            </label>
+        </div>
+
+        <div class="experience-grid" id="experience-grid">
+            <!-- تُعبّأ تلقائيًا بواسطة script.js من ملف data.js -->
+        </div>
+    </section>
+
+    <!-- قسم الخريطة التفاعلية — المكان والتنسيق من ملف فريق العمل، والخريطة الذكية الفعلية (Leaflet + map.js) من ملفي -->
+    <section class="interactive-map-section" id="interactive-map" style="padding: 60px 5%; background: rgba(0, 0, 0, 0.15);">
+        <div class="section-head" style="margin-bottom: 20px;">
+            <h2 data-ar="الخريطة الذكية" data-en="Smart Map">الخريطة الذكية</h2>
+            <p style="color: rgba(255, 255, 255, 0.7); font-size: 1.06rem; margin-top: 5px;" data-ar="شوف مواقع كل الفعاليات بالمنطقة الشرقية ملوّنة حسب الإقبال المتوقع" data-en="See every Eastern Province experience on the map, color-coded by expected demand">شوف مواقع كل الفعاليات بالمنطقة الشرقية ملوّنة حسب الإقبال المتوقع</p>
+        </div>
+
+        <div class="map-legend">
+            <span><i class="dot high"></i> <span data-ar="مرتفع" data-en="High">مرتفع</span></span>
+            <span><i class="dot medium"></i> <span data-ar="متوسط" data-en="Medium">متوسط</span></span>
+            <span><i class="dot low"></i> <span data-ar="منخفض" data-en="Low">منخفض</span></span>
+        </div>
+
+        <div class="map-container" style="width: 100%; height: 420px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+            <div id="smart-map" style="width: 100%; height: 100%;"></div>
+        </div>
+
+        <a href="map.html" class="map-teaser" style="margin-top: 20px;">
+            <span data-ar="افتح الخريطة الذكية الكاملة" data-en="Open the full smart map">افتح الخريطة الذكية الكاملة</span>
+            <span class="map-teaser-arrow">←</span>
+        </a>
+    </section>
+
+    <!-- قسم جرب معنا -->
+    <section class="try-with-us" id="try-with-us" style="padding: 60px 5%; background: #2c221e; border-top: 1px solid rgba(217, 98, 43, 0.2); border-bottom: 1px solid rgba(217, 98, 43, 0.2);">
+        <div class="section-head" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="color: #f3e9dc;" data-ar="جرب معنا" data-en="Try With Us">جرب معنا</h2>
+            <span style="color: #d9622b; font-size: 1.01rem; font-weight: 500;" data-ar="اسحب لرؤية المزيد ←" data-en="Scroll for more →">اسحب لرؤية المزيد ←</span>
+        </div>
+
+        <div class="carousel-container no-scrollbar" style="display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth; padding-bottom: 10px; -webkit-overflow-scrolling: touch;">
+            <!-- بطاقة 1 -->
+            <div class="carousel-item" style="flex: 0 0 220px; height: 340px; border-radius: 16px; border: 1px solid rgba(243, 233, 220, 0.15); position: relative; overflow: hidden; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: url('assets/images/try-with-us/try-atv-dunes.jpg') center/cover no-repeat;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,14,10,0) 45%, rgba(20,14,10,0.9) 100%);"></div>
+                <span style="position: absolute; bottom: 18px; right: 16px; left: 16px; color: #f3e9dc; font-weight: bold; font-size: 1.23rem; text-align: center;" data-ar="الدراجات الرملية" data-en="Dune Buggy Ride">الدراجات الرملية</span>
+            </div>
+
+            <!-- بطاقة 2 -->
+            <div class="carousel-item" style="flex: 0 0 220px; height: 340px; border-radius: 16px; border: 1px solid rgba(243, 233, 220, 0.15); position: relative; overflow: hidden; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: url('assets/images/try-with-us/try-camel-caravan.jpg') center/cover no-repeat;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,14,10,0) 45%, rgba(20,14,10,0.9) 100%);"></div>
+                <span style="position: absolute; bottom: 18px; right: 16px; left: 16px; color: #f3e9dc; font-weight: bold; font-size: 1.23rem; text-align: center;" data-ar="قافلة الجمال" data-en="Camel Caravan">قافلة الجمال</span>
+            </div>
+
+            <!-- بطاقة 3 -->
+            <div class="carousel-item" style="flex: 0 0 220px; height: 340px; border-radius: 16px; border: 1px solid rgba(243, 233, 220, 0.15); position: relative; overflow: hidden; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: url('assets/images/try-with-us/try-desert-safari.jpg') center/cover no-repeat;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,14,10,0) 45%, rgba(20,14,10,0.9) 100%);"></div>
+                <span style="position: absolute; bottom: 18px; right: 16px; left: 16px; color: #f3e9dc; font-weight: bold; font-size: 1.23rem; text-align: center;" data-ar="سفاري الصحراء" data-en="Desert Safari">سفاري الصحراء</span>
+            </div>
+
+            <!-- بطاقة 4 -->
+            <div class="carousel-item" style="flex: 0 0 220px; height: 340px; border-radius: 16px; border: 1px solid rgba(243, 233, 220, 0.15); position: relative; overflow: hidden; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: url('assets/images/try-with-us/try-folklore-night.jpg') center/cover no-repeat;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,14,10,0) 45%, rgba(20,14,10,0.9) 100%);"></div>
+                <span style="position: absolute; bottom: 18px; right: 16px; left: 16px; color: #f3e9dc; font-weight: bold; font-size: 1.23rem; text-align: center;" data-ar="العرضة الشعبية" data-en="Traditional Ardah">العرضة الشعبية</span>
+            </div>
+
+            <!-- بطاقة 5 -->
+            <div class="carousel-item" style="flex: 0 0 220px; height: 340px; border-radius: 16px; border: 1px solid rgba(243, 233, 220, 0.15); position: relative; overflow: hidden; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: url('assets/images/try-with-us/try-mountain-hike.jpg') center/cover no-repeat;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,14,10,0) 45%, rgba(20,14,10,0.9) 100%);"></div>
+                <span style="position: absolute; bottom: 18px; right: 16px; left: 16px; color: #f3e9dc; font-weight: bold; font-size: 1.23rem; text-align: center;" data-ar="رحلة التسلق" data-en="Mountain Hiking">رحلة التسلق</span>
+            </div>
+
+            <!-- بطاقة 6 -->
+            <div class="carousel-item" style="flex: 0 0 220px; height: 340px; border-radius: 16px; border: 1px solid rgba(243, 233, 220, 0.15); position: relative; overflow: hidden; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: url('assets/images/try-with-us/try-desert-camp.jpg') center/cover no-repeat;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,14,10,0) 45%, rgba(20,14,10,0.9) 100%);"></div>
+                <span style="position: absolute; bottom: 18px; right: 16px; left: 16px; color: #f3e9dc; font-weight: bold; font-size: 1.23rem; text-align: center;" data-ar="مخيم الغروب" data-en="Sunset Desert Camp">مخيم الغروب</span>
+            </div>
+
+            <!-- بطاقة 7 -->
+            <div class="carousel-item" style="flex: 0 0 220px; height: 340px; border-radius: 16px; border: 1px solid rgba(243, 233, 220, 0.15); position: relative; overflow: hidden; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: url('assets/images/try-with-us/try-cliffside-dining.jpg') center/cover no-repeat;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,14,10,0) 45%, rgba(20,14,10,0.9) 100%);"></div>
+                <span style="position: absolute; bottom: 18px; right: 16px; left: 16px; color: #f3e9dc; font-weight: bold; font-size: 1.23rem; text-align: center;" data-ar="عشاء الصخور" data-en="Cliffside Dining">عشاء الصخور</span>
+            </div>
+
+            <!-- بطاقة 8 -->
+            <div class="carousel-item" style="flex: 0 0 220px; height: 340px; border-radius: 16px; border: 1px solid rgba(243, 233, 220, 0.15); position: relative; overflow: hidden; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: url('assets/images/try-with-us/try-canyon-drive.jpg') center/cover no-repeat;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,14,10,0) 45%, rgba(20,14,10,0.9) 100%);"></div>
+                <span style="position: absolute; bottom: 18px; right: 16px; left: 16px; color: #f3e9dc; font-weight: bold; font-size: 1.23rem; text-align: center;" data-ar="جولة الوادي" data-en="Canyon Tour">جولة الوادي</span>
+            </div>
+
+            <!-- بطاقة 9 -->
+            <div class="carousel-item" style="flex: 0 0 220px; height: 340px; border-radius: 16px; border: 1px solid rgba(243, 233, 220, 0.15); position: relative; overflow: hidden; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: url('assets/images/try-with-us/try-art-workshop.jpg') center/cover no-repeat;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,14,10,0) 45%, rgba(20,14,10,0.9) 100%);"></div>
+                <span style="position: absolute; bottom: 18px; right: 16px; left: 16px; color: #f3e9dc; font-weight: bold; font-size: 1.23rem; text-align: center;" data-ar="ورشة الرسم" data-en="Art Workshop">ورشة الرسم</span>
+            </div>
+
+            <!-- بطاقة 10 -->
+            <div class="carousel-item" style="flex: 0 0 220px; height: 340px; border-radius: 16px; border: 1px solid rgba(243, 233, 220, 0.15); position: relative; overflow: hidden; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; background: url('assets/images/try-with-us/try-traditional-feast.jpg') center/cover no-repeat;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,14,10,0) 45%, rgba(20,14,10,0.9) 100%);"></div>
+                <span style="position: absolute; bottom: 18px; right: 16px; left: 16px; color: #f3e9dc; font-weight: bold; font-size: 1.23rem; text-align: center;" data-ar="المأدبة التراثية" data-en="Traditional Feast">المأدبة التراثية</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر مع إضافة قسم تواصل معنا في الأسفل على اليسار -->
+    <footer class="site-footer">
+        <div class="footer-top" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <nav class="footer-nav">
+                <a href="index.html" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+                <a href="index.html#experiences" data-ar="التجارب" data-en="Experiences">التجارب</a>
+                <a href="map.html" data-ar="الخريطة" data-en="Map">الخريطة</a>
+                <a href="providers.html" data-ar="مقدمو الخدمات" data-en="Providers">مقدمو الخدمات</a>
+                <a href="partners.html" data-ar="شركاؤنا" data-en="Partners">شركاؤنا</a>
+                <a href="bookings.html" data-ar="حجوزاتي" data-en="My Bookings">حجوزاتي</a>
+                <a href="login.html" data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</a>
+            </nav>
+
+            <!-- قسم تواصل معنا (أسفل اليسار) -->
+            <div class="footer-contact" style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+                <span style="font-weight: bold; font-size: 1.06rem; color: #f3e9dc;" data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</span>
+                <div class="social-links" style="display: flex; gap: 16px; align-items: center;">
+                    <a href="https://x.com" target="_blank" title="X (Twitter)" style="color: #f3e9dc; font-size: 1.34rem; transition: color 0.3s;" onmouseover="this.style.color='#d9622b'" onmouseout="this.style.color='#f3e9dc'"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank" title="Instagram" style="color: #f3e9dc; font-size: 1.34rem; transition: color 0.3s;" onmouseover="this.style.color='#d9622b'" onmouseout="this.style.color='#f3e9dc'"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://tiktok.com" target="_blank" title="TikTok" style="color: #f3e9dc; font-size: 1.34rem; transition: color 0.3s;" onmouseover="this.style.color='#d9622b'" onmouseout="this.style.color='#f3e9dc'"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="tel:+966500000000" title="Phone" style="color: #f3e9dc; font-size: 1.34rem; transition: color 0.3s;" onmouseover="this.style.color='#d9622b'" onmouseout="this.style.color='#f3e9dc'"><i class="fa-solid fa-phone"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span data-ar="طشّة — منصة سياحية ذكية" data-en="Tasha — Smart Tourism Platform">طشّة — منصة سياحية ذكية</span>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/predict.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
